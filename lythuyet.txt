@@ -1,2 +1,45 @@
-fjbjbkgbvkh
-bbmmgmbk
+- các cách in output, cài snippet cho psvm, sout, in ra số float double với độ chính xác như nào
+ các cách nhập dữ liệu input vào
+các hàm trong thư viện math
+
+
+Kiểu dữ liệu (Data type):
+💡 Ngôn ngữ lập trình Java cung cấp các kiểu dữ liệu để biểu diễn dữ liệu kiểu số nguyên, số thực, ký tự, đúng sai, xâu ký tự...
+
+Kiểu dữ liệu	Kích thước (byte)	Giá trị
+byte	1 byte	-128 đến 127
+short	2 byte	-32768 đến 32767
+int	4 byte = 32bit	-2^31 đến 2^31 - 1
+long	8 byte = 64bit	-2^63 đến 2^63 - 1
+float	4 byte	Lưu số thực độ chính xác từ 6 tới 7 chữ số sau dấu phẩy
+double	8 byte	Lưu số thực độ chính xác tới 15 chữ số sau dấu phẩy
+char	2 byte	Lưu các ký tự
+boolean	1 byte	Lưu giá trị true (đúng) hoặc false (sai)
+
+Ví dụ về khai báo biến, nhập và hiển thị giá trị của biến:
+Ví dụ về khai báo biến:
+java
+
+
+public class Main {
+    public static void main(String[] args) {
+        int banKinh = 100;
+        long dienTich = 10182383812838123L;
+        float PI = 3.14F;
+        double temp = 30.89129391293D;
+        boolean kiemTra = true;
+        char kiTu = '@';
+    }
+}
+
+
+Hiển thị giá trị của biến số thực với độ chính xác cho trước:
+java
+public class Main {
+    public static void main(String[] args) {
+        float chuVi = 3.18238f;
+        double dienTich = 39.91293912391293d;
+        System.out.printf("%.2f\n", chuVi);
+        System.out.printf("%.10f\n", dienTich);
+    }
+}
