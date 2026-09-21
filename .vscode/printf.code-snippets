@@ -1,0 +1,10 @@
+{
+"Print f": {
+  "prefix": "printf",
+  "body": [
+    "System.out.printf(\"$1\", $2);$0"
+  ],
+  "description": "In ra man hinh voi System.out.printf"
+}
+
+}

@@ -1,0 +1,9 @@
+{
+	"endl": {
+  "prefix": "sout",
+  "body": [
+    "System.out.println($0);"
+  ],
+  "description": "endl"
+}
+}

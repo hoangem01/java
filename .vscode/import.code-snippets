@@ -1,0 +1,10 @@
+{
+	"Custom Java Import": {
+    "prefix": "imp",
+    "body": [
+        "import ${1|java.util.Scanner,java.util.ArrayList,java.util.Arrays,java.util.Collections,java.io.*|};",
+        "$0"
+    ],
+    "description": "Tạo menu chọn thư viện để import"
+}
+}
