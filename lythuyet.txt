@@ -1,26 +1,100 @@
-- các cách in output, cài snippet cho psvm, sout, in ra số float double với độ chính xác như nào
- các cách nhập dữ liệu input vào
-các hàm trong thư viện math
+* Các lệnh in dữ liệu ra màn hình:
+
+- System.out.print("text");: In chuỗi ra màn hình và giữ con trỏ chuột ở lại 
+trên cùng dòng đó.
+
+- System.out.println("text");: In chuỗi ra màn hình và tự động xuống dòng 
+(tương đương với việc thêm ký tự \n ở cuối).
+
+- System.out.printf("format", args);: In chuỗi theo định dạng
+
++ Các ký tự "giữ chỗ" (Format Specifiers) cơ bản:
+Ký tự        Kiểu dữ liệu tương ứng                     Ví dụ
+
+%d        Số nguyên (byte, short, int, long)           10, -25
+%f        Số thực (float, double)                   3.14159, -0.5
+%s          Chuỗi văn bản (String)                     "Java"
+%c          Một ký tự (char)                            'A'
+%b          Đúng/Sai (boolean)                      true, false
+%n (\n)      Ký tự xuống dòng
+
+Ví dụ:
+String name = "Hoang";
+int age = 25;
+// Nối chuỗi bằng println 
+System.out.println("Tên tôi là " + name + ", năm nay tôi " + age + " tuổi."); 
+
+// Dùng printf 
+System.out.printf("Tên tôi là %s, năm nay tôi %d tuổi.", name, age);
+
+- Định dạng độ chính xác cho số thực (float/double):
+Sử dụng lệnh System.out.printf kết hợp với cú pháp %.nf (trong đó n là số lượng 
+chữ số thập phân bạn muốn giữ lại). Java sẽ tự động làm tròn số.
+
+Ví dụ:
+double pi = 3.14159265;
+System.out.printf("Pi với 2 số thập phân: %.2f\n", pi); // In ra: 3.14
+System.out.printf("Pi với 4 số thập phân: %.4f\n", pi); // In ra: 3.1416
+
+-------------------------------------------------------------------------------------------
+* Nhập dữ liệu (Input)
+Cách đơn giản và phổ biến nhất trong Java là sử dụng class Scanner thuộc thư viện 
+java.util.
+Ví dụ:
+    Scanner sc = new Scanner(System.in);
+
+    System.out.print("Nhập một số nguyên: ");
+    int a = sc.nextInt();                   // Đọc số nguyên (int)
+
+    System.out.print("Nhập một số thực: ");
+    double b = sc.nextDouble();             // Đọc số thực (double)
+
+    // LƯU Ý QUAN TRỌNG: Xóa bộ nhớ đệm
+    sc.nextLine(); 
+    System.out.print("Nhập họ và tên: ");
+    String name = sc.nextLine();            // Đọc toàn bộ một dòng chữ 
+                                            (bao gồm cả dấu cách)
+    sc.close();                             // Đóng Scanner khi không dùng nữa để
+                                            giải phóng bộ nhớ
+  
+-> Lỗi "trôi lệnh" thường gặp: Khi bạn dùng các hàm đọc số như nextInt(), nextDouble(), 
+chúng chỉ lấy con số mà để lại ký tự Enter \n trong bộ đệm. Nếu gọi ngay nextLine() 
+sau đó, nó sẽ đọc trúng ký tự Enter này và kết thúc ngay lập tức. 
+Cần gọi một lệnh sc.nextLine() trống ở giữa để "ăn" ký tự Enter thừa đó.
+
+-------------------------------------------------------------------------------------------
+* Các hàm trong thư viện Math
+- Thư viện java.lang.Math được tích hợp sẵn (không cần import) và chứa các phương thức 
+tĩnh (static) dùng để tính toán toán học. Bạn gọi hàm trực tiếp thông qua tên lớp Math.
+             
++ Math.abs(x): Trị tuyệt đối             
++ Math.pow(a, b): Lũy thừa ($a^b$)          
++ Math.sqrt(x): Căn bậc 2                 
++ Math.max(a, b): Trả về số lớn nhất        
++ Math.min(a, b): Trả về số nhỏ nhất        
++ Math.round(x ): Làm tròn đến số nguyên gần nhất           //Math.round(3.6)  ->  4
++ Math.ceil(x): Làm tròn lên                                //Math.ceil(3.1)   ->  4.0
++ Math.floor(x):  Làm tròn xuống                            //Math.floor(3.9)  ->  3.0
+
+-> Hằng số hữu ích: Math.PI trả về giá trị số Pi ~ 3.14159265. Tất cả các hàm như pow
+hay sqrt đều trả về kiểu double
+-------------------------------------------------------------------------------------------
+* Kiểu dữ liệu (Data type):
+💡 Ngôn ngữ lập trình Java cung cấp các kiểu dữ liệu để biểu diễn dữ liệu kiểu số nguyên,   
+số thực, ký tự, đúng sai, xâu ký tự...
+
+Kiểu dữ liệu	    Kích thước (byte)	        Giá trị
+byte	            1 byte	                -128 đến 127
+short	            2 byte	                -32768 đến 32767
+int	             4 byte = 32bit	            -2^31 đến 2^31 - 1
+long	         8 byte = 64bit	            -2^63 đến 2^63 - 1
+float	            4 byte	                Số thực độ chính xác từ 6 - 7 chữ số sau dấu phẩy
+double	            8 byte	                Số thực độ chính xác tới 15 chữ số sau dấu phẩy
+char	            2 byte	                Lưu các ký tự
+boolean	            1 byte	                Lưu giá trị true (đúng) hoặc false (sai)
 
 
-Kiểu dữ liệu (Data type):
-💡 Ngôn ngữ lập trình Java cung cấp các kiểu dữ liệu để biểu diễn dữ liệu kiểu số nguyên, số thực, ký tự, đúng sai, xâu ký tự...
-
-Kiểu dữ liệu	Kích thước (byte)	Giá trị
-byte	1 byte	-128 đến 127
-short	2 byte	-32768 đến 32767
-int	4 byte = 32bit	-2^31 đến 2^31 - 1
-long	8 byte = 64bit	-2^63 đến 2^63 - 1
-float	4 byte	Lưu số thực độ chính xác từ 6 tới 7 chữ số sau dấu phẩy
-double	8 byte	Lưu số thực độ chính xác tới 15 chữ số sau dấu phẩy
-char	2 byte	Lưu các ký tự
-boolean	1 byte	Lưu giá trị true (đúng) hoặc false (sai)
-
-Ví dụ về khai báo biến, nhập và hiển thị giá trị của biến:
 Ví dụ về khai báo biến:
-java
-
-
 public class Main {
     public static void main(String[] args) {
         int banKinh = 100;
@@ -34,7 +108,6 @@ public class Main {
 
 
 Hiển thị giá trị của biến số thực với độ chính xác cho trước:
-java
 public class Main {
     public static void main(String[] args) {
         float chuVi = 3.18238f;
