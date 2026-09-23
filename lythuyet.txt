@@ -1,3 +1,28 @@
+* Các package có sẵn của thư viện chuẩn Java
+
+1. import java.util.*; Xử lý dữ liệu bao gồm:
+
++ Nhập xuất cơ bản: Scanner
+
++ Cấu trúc dữ liệu (Collections): ArrayList, List, LinkedList, Map, HashMap, Set.
+
++ Các lớp tiện ích: Arrays, Collections, Comparator, Objects, UUID, Random.
+
+2. import java.io.*; Xử lý File bao gồm:
+
++ Đọc/Ghi cơ bản: File, FileReader, FileWriter.
+
++ Đọc/Ghi hiệu suất cao: BufferedReader, BufferedWriter.
+
++ Bắt lỗi: IOException, FileNotFoundException.
+
+3. import java.time.*; và import java.time.format.*; Xử lý Thời gian bao gồm:
+
++ (java.time.*) lấy các class cốt lõi: LocalDate, LocalTime, LocalDateTime, Period.
+ 
++ (java.time.format.*) lấy công cụ định dạng: DateTimeFormatter (để in ngày tháng 
+theo kiểu "dd/MM/yyyy").
+-------------------------------------------------------------------------------------------
 * Các lệnh in dữ liệu ra màn hình:
 
 - System.out.print("text");: In chuỗi ra màn hình và giữ con trỏ chuột ở lại 
@@ -116,3 +141,4 @@ public class Main {
         System.out.printf("%.10f\n", dienTich);
     }
 }
+
