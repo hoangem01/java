@@ -142,7 +142,169 @@ public class Main {
     }
 }
 
-- mảng 1 chiều, cách khai báo, duyệt với for nhập xuất
-- array.sort là gì, comparator cho hàm sort  
+-------------------------------------------------------------------------------------------
+* Mảng 1 chiều (Array)
+- Kích thước cố định: Một khi đã khởi tạo, không thể thay đổi số lượng phần tử của mảng.
+- Kiểu dữ liệu đồng nhất: Tất cả phần tử trong mảng phải có cùng một kiểu dữ liệu.
+- Lưu trữ liên tiếp: Cấp phát bộ nhớ thành một dải liên tục, truy xuất cực nhanh qua chỉ số 
+(index) bắt đầu từ 0 đến length - 1
+
+- Cách khai báo và khởi tạo:
+Cách 1: Khai báo mảng rỗng với số lượng phần tử cố định (ví dụ 5)
+int[] arr1 = new int[5]; // Các phần tử mặc định là 0
+Cách 2: Khai báo và gán sẵn giá trị
+int[] arr2 = {10, 20, 30, 40, 50}; 
+
+- Duyệt mảng (Nhập/Xuất):
+Scanner sc = new Scanner(System.in);
+System.out.print("Nhập số phần tử: ");
+int n = sc.nextInt();
+int[] a = new int[n];
+
+// Nhập dữ liệu bằng vòng lặp for truyền thống
+for (int i = 0; i < n; i++) {
+    a[i] = sc.nextInt();
+}
+
+// Xuất dữ liệu bằng for-each (ngắn gọn, dùng khi chỉ cần đọc giá trị)
+for (int item : a) {
+    System.out.print(item + " ");
+}
+
+-------------------------------------------------------------------------------------------
+2. Arrays.sort và Comparator
+- Arrays.sort là một hàm tĩnh (static) trong thư viện java.util.
+Arrays dùng để sắp xếp các phần tử trong mảng. Mặc định, hàm này sẽ sắp xếp theo chiều 
+tăng dần.
+
+- Sử dụng Comparator (Tùy chỉnh luật sắp xếp):
+Comparator là một interface cho phép bạn tự định nghĩa lại cách so sánh hai phần tử 
+(ví dụ: muốn sắp xếp giảm dần, hoặc sắp xếp theo độ dài chuỗi).
+
++ Lưu ý cực kỳ quan trọng: Bạn không thể dùng Comparator cho mảng kiểu nguyên thủy 
+(như int[], double[]). Bạn bắt buộc phải dùng mảng kiểu đối tượng 
+(như Integer[], Double[], String[]).
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arrAsc = {5, 2, 8, 1};
+        Arrays.sort(arrAsc);            // Kết quả: 1, 2, 5, 8
+
+        Integer[] arrDesc = {5, 2, 8, 1};
+        
+        // Cách 1: Dùng Comparator có sẵn của thư viện
+        Arrays.sort(arrDesc, Collections.reverseOrder());
+        
+        // Cách 2: Tự viết luật bằng biểu thức Lambda (Cú pháp mũi tên)
+        Arrays.sort(arrDesc, (a, b) -> b - a); 
+    }
+}
+-------------------------------------------------------------------------------------------
+3. Kiểu int (Primitive) và Integer (Wrapper)Trong Java, mọi thứ đều là Đối tượng 
+(Object), ngoại trừ 8 kiểu dữ liệu nguyên thủy (primitive) để tối ưu hiệu suất. 
+Integer chính là lớp "đóng gói" (wrapper) của int biến nó thành một đối tượng.
+
++ int: Không thể dùng trong ArrayList<int>, không có hàm nào.
++ Integer: Bắt buộc dùng cho ArrayList<Integer>, Có nhiều hàm hỗ trợ.
+
+- Khởi tạo danh sách mẫu:
+ArrayList<Integer> list = new ArrayList<>();
+
++ hàm Thêm phần tử
+add(giá_trị): Thêm một phần tử vào cuối danh sách.
+
+list.add(10); 
+list.add(20);                   // list hiện tại: [10, 20]
+list.add(1, 15);                // Chèn số 15 vào index 1. 
+                                Kết quả: [10, 15, 20]
+
+-> add(vị_trí, giá_trị): Chèn một phần tử vào một vị trí (index) cụ thể. 
+Các phần tử phía sau sẽ tự động lùi lại một bước.
+
++ hàm Truy xuất và Tìm kiếm
+• get(index): Lấy giá trị của phần tử tại vị trí index (tương đương 
+arr[index] của mảng thường).
+int x = list.get(0);                    // Trả về 10
+
+• size(): Lấy tổng số lượng phần tử đang có trong danh sách 
+(tương đương arr.length).
+int count = list.size();                // Trả về 3
+
+• contains(giá_trị): Kiểm tra xem một giá trị có tồn tại trong danh sách hay không. 
+Trả về true hoặc false.
+boolean check = list.contains(15);      // Trả về true
+
+• indexOf(giá_trị): Tìm và trả về index đầu tiên của giá trị đó. Nếu không tìm thấy, 
+trả về -1.
+int pos = list.indexOf(20);             // Trả về 2
+
+• isEmpty(): Kiểm tra xem danh sách có rỗng hay không. Trả về true nếu danh sách 
+không có phần tử nào (size = 0).
+
++ hàm Cập nhật và Xóa
+• set(index, giá_trị_mới): Ghi đè/thay đổi giá trị của phần tử tại vị trí index 
+(tương đương arr[index] = giá_trị_mới).
+list.set(0, 99);                        // list trở thành: [99, 15, 20]
+
+• remove(index): Xóa phần tử tại vị trí index. Các phần tử phía sau sẽ tự động dồn lên trước.
+list.remove(1);                         // Xóa phần tử ở index 1 (số 15). Kết quả: [99, 20]
+
+• remove(Object): Xóa phần tử theo giá trị (chỉ xóa phần tử đầu tiên tìm thấy). 
+Lưu ý: Với ArrayList kiểu số nguyên, bạn phải ép kiểu để tránh nhầm với hàm remove(index).
+list.remove(Integer.valueOf(99));       // Xóa số 99. Kết quả: [20]
+
+• clear(): Xóa sạch toàn bộ dữ liệu, biến ArrayList về trạng thái rỗng.
+
++ hàm Sắp xếp (Sort)
+• Khác với mảng tĩnh dùng Arrays.sort(), với ArrayList bạn có 2 cách để sắp xếp:
+
+- Dùng list.sort() (Tăng dần):
+list.sort(list); 
+
+- Dùng trực tiếp hàm sort() của list kết hợp Comparator (Linh hoạt):
+// Tăng dần
+list.sort((a, b) -> a - b); 
+
+// Giảm dần
+list.sort((a, b) -> b - a);
+
+Ví dụ:
+public static int tinhTongChuSo(int n) {
+    int sum = 0;
+    n = Math.abs(n);
+    while (n > 0) {
+        sum += n % 10; 
+        n /= 10;       
+    }
+    return sum;
+}
+ArrayList<Integer> list = new ArrayList<>(List.of(12, 104, 5, 23, 9));
+list.sort(
+    Comparator.comparingInt(Main::tinhTongChuSo)          // Tiêu chí 1: Tổng chữ số tăng dần
+              .thenComparing((a, b) -> b - a)             // Tiêu chí 2: Giá trị gốc giảm dần (b - a)
+);
 
 
++ Hàm toArray(): Trả về mảng chứa các object tương tự như trong array list.
+
+public static void main(String[] args) {
+    List<Integer> arr = new ArrayList<>();
+    int a[] = {1, 2, 2, 2, 3, 3, 5};
+    for(int x: a)
+        arr.add(x);
+    Object[] b = arr.toArray();
+    for(Object x: b)
+        System.out.print(x + " ");
+}
+
++ Hàm forEach(): Cung cấp một áp dụng hàm nào đó với lần lượt các phần tử 
+trong array list.   
+
+public static void main(String[] args) {
+    int a[] = {1, 2, 2, 2, 3, 3, 5};
+    List<Integer> arr = new ArrayList<>();
+    for(int x : a){
+        arr.add(x);
+    }
+    arr.forEach((n) -> System.out.print(n + " "));
+}
