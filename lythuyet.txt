@@ -142,3 +142,7 @@ public class Main {
     }
 }
 
+- mảng 1 chiều, cách khai báo, duyệt với for nhập xuất
+- array.sort là gì, comparator cho hàm sort  
+
+
