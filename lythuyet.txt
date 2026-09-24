@@ -141,9 +141,14 @@ public class Main {
         System.out.printf("%.10f\n", dienTich);
     }
 }
+-------------------------------------------------------------------------------------------
+* Kiểu int (Primitive) và Integer (Wrapper)Trong Java, mọi thứ đều là Đối tượng 
+(Object), ngoại trừ 8 kiểu dữ liệu nguyên thủy (primitive) để tối ưu hiệu suất. 
+Integer chính là lớp "đóng gói" (wrapper) của int biến nó thành một đối tượng.
 
 -------------------------------------------------------------------------------------------
 * Mảng 1 chiều (Array)
+
 - Kích thước cố định: Một khi đã khởi tạo, không thể thay đổi số lượng phần tử của mảng.
 - Kiểu dữ liệu đồng nhất: Tất cả phần tử trong mảng phải có cùng một kiểu dữ liệu.
 - Lưu trữ liên tiếp: Cấp phát bộ nhớ thành một dải liên tục, truy xuất cực nhanh qua chỉ số 
@@ -171,8 +176,9 @@ for (int item : a) {
     System.out.print(item + " ");
 }
 
--------------------------------------------------------------------------------------------
-2. Arrays.sort và Comparator
+---------------------------------------------
+* Arrays.sort và Comparator
+
 - Arrays.sort là một hàm tĩnh (static) trong thư viện java.util.
 Arrays dùng để sắp xếp các phần tử trong mảng. Mặc định, hàm này sẽ sắp xếp theo chiều 
 tăng dần.
@@ -192,20 +198,17 @@ public class Main {
 
         Integer[] arrDesc = {5, 2, 8, 1};
         
-        // Cách 1: Dùng Comparator có sẵn của thư viện
-        Arrays.sort(arrDesc, Collections.reverseOrder());
-        
-        // Cách 2: Tự viết luật bằng biểu thức Lambda (Cú pháp mũi tên)
+        // Tự viết luật bằng biểu thức Lambda (Cú pháp mũi tên)
         Arrays.sort(arrDesc, (a, b) -> b - a); 
     }
 }
--------------------------------------------------------------------------------------------
-3. Kiểu int (Primitive) và Integer (Wrapper)Trong Java, mọi thứ đều là Đối tượng 
-(Object), ngoại trừ 8 kiểu dữ liệu nguyên thủy (primitive) để tối ưu hiệu suất. 
-Integer chính là lớp "đóng gói" (wrapper) của int biến nó thành một đối tượng.
 
 + int: Không thể dùng trong ArrayList<int>, không có hàm nào.
 + Integer: Bắt buộc dùng cho ArrayList<Integer>, Có nhiều hàm hỗ trợ.
+
+-------------------------------------------------------------------------------------------
+* ArrayList: hoạt động như một mảng động có kích thước tự động tăng hoặc giảm khi bạn thêm 
+hoặc xóa phần tử.
 
 - Khởi tạo danh sách mẫu:
 ArrayList<Integer> list = new ArrayList<>();
@@ -261,30 +264,44 @@ list.remove(Integer.valueOf(99));       // Xóa số 99. Kết quả: [20]
 - Dùng list.sort() (Tăng dần):
 list.sort(list); 
 
-- Dùng trực tiếp hàm sort() của list kết hợp Comparator (Linh hoạt):
-// Tăng dần
-list.sort((a, b) -> a - b); 
+- Dùng Lambda Expression: 
+Cú pháp:
+(danh_sách_tham_số) -> thân_biểu_thức
 
-// Giảm dần
-list.sort((a, b) -> b - a);
++ Được phép dùng Lambda: Integer[], String[], Double[], hoặc mảng chứa các 
+object do bạn tự định nghĩa.
+
++ Báo lỗi biên dịch: int[], double[], char[], long[]
 
 Ví dụ:
-public static int tinhTongChuSo(int n) {
-    int sum = 0;
-    n = Math.abs(n);
-    while (n > 0) {
-        sum += n % 10; 
-        n /= 10;       
+public class Main {
+    public static int tinhTongChuSo(int n) {
+        int sum = 0;
+        n = Math.abs(n);
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
     }
-    return sum;
+
+    public static void main(String[] args) {
+
+        List<Integer> arr = new ArrayList<>(Arrays.asList(12, 23, 104, 51, 9));
+
+        arr.sort((o1, o2) -> {
+            int tong1 = tinhTongChuSo(o1);
+            int tong2 = tinhTongChuSo(o2);
+            
+            if (tong1 != tong2) {
+                return tong1 - tong2; 
+            }
+            return o2 - o1; 
+        });
+
+        System.out.println(arr);
+    }
 }
-ArrayList<Integer> list = new ArrayList<>(List.of(12, 104, 5, 23, 9));
-list.sort(
-    Comparator.comparingInt(Main::tinhTongChuSo)          // Tiêu chí 1: Tổng chữ số tăng dần
-              .thenComparing((a, b) -> b - a)             // Tiêu chí 2: Giá trị gốc giảm dần (b - a)
-);
-
-
 + Hàm toArray(): Trả về mảng chứa các object tương tự như trong array list.
 
 public static void main(String[] args) {
@@ -308,3 +325,4 @@ public static void main(String[] args) {
     }
     arr.forEach((n) -> System.out.print(n + " "));
 }
+
