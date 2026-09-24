@@ -160,21 +160,21 @@ int[] arr1 = new int[5]; // Các phần tử mặc định là 0
 Cách 2: Khai báo và gán sẵn giá trị
 int[] arr2 = {10, 20, 30, 40, 50}; 
 
-- Duyệt mảng (Nhập/Xuất):
-Scanner sc = new Scanner(System.in);
-System.out.print("Nhập số phần tử: ");
-int n = sc.nextInt();
-int[] a = new int[n];
+// Duyệt mảng (Nhập/Xuất):
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Nhập số phần tử: ");
+    int n = sc.nextInt();
+    int[] a = new int[n];
 
 // Nhập dữ liệu bằng vòng lặp for truyền thống
-for (int i = 0; i < n; i++) {
-    a[i] = sc.nextInt();
-}
+    for (int i = 0; i < n; i++) {
+        a[i] = sc.nextInt();
+    }
 
 // Xuất dữ liệu bằng for-each (ngắn gọn, dùng khi chỉ cần đọc giá trị)
-for (int item : a) {
-    System.out.print(item + " ");
-}
+    for (int item : a) {
+        System.out.print(item + " ");
+    }
 
 ---------------------------------------------
 * Arrays.sort và Comparator
@@ -208,10 +208,41 @@ public class Main {
 
 -------------------------------------------------------------------------------------------
 * ArrayList: hoạt động như một mảng động có kích thước tự động tăng hoặc giảm khi bạn thêm 
-hoặc xóa phần tử.
+hoặc xóa phần tử. Cho phép chứa giá trị null
 
-- Khởi tạo danh sách mẫu:
-ArrayList<Integer> list = new ArrayList<>();
+- Duyệt ArrayList:
+public class Main {
+    public static void main(String[] args) {
+        // 1. KHAI BÁO
+        
+        ArrayList<Integer> numbers = new ArrayList<>();
+
+        // 2. NHẬP DỮ LIỆU (INPUT)
+
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        for (int i = 0; i < n; i++) {
+            System.out.print("Nhập phần tử thứ " + (i + 1) + ": ");
+            int value = scanner.nextInt();
+            numbers.add(value); 
+        }
+
+        // 3. XUẤT DỮ LIỆU (OUTPUT)
+        
+        // Cách 1: In trực tiếp 
+        System.out.println(numbers);
+
+        // Cách 2: Dùng vòng lặp for truyền thống 
+        for (int i = 0; i < numbers.size(); i++) { 
+            System.out.print(numbers.get(i) + " "); // Dùng hàm get(i) để lấy giá trị tại vị trí i
+        }
+
+        // Cách 3: Dùng vòng lặp for-each 
+        for (Integer num : numbers) {
+            System.out.print(num + " ");
+        }
+    }
+}
 
 + hàm Thêm phần tử
 add(giá_trị): Thêm một phần tử vào cuối danh sách.
@@ -225,6 +256,7 @@ list.add(1, 15);                // Chèn số 15 vào index 1.
 Các phần tử phía sau sẽ tự động lùi lại một bước.
 
 + hàm Truy xuất và Tìm kiếm
+
 • get(index): Lấy giá trị của phần tử tại vị trí index (tương đương 
 arr[index] của mảng thường).
 int x = list.get(0);                    // Trả về 10
@@ -326,3 +358,318 @@ public static void main(String[] args) {
     arr.forEach((n) -> System.out.print(n + " "));
 }
 
+-------------------------------------------------------------------------------------------
+* Set: là một interface đại diện cho khái niệm tập hợp toán học
+
+Áp dụng set:
+1. Các bài toán liên quan tới việc xóa, thêm, tìm kiếm một phần tử nào đó được thực hiện đi 
+thực hiện lại nhiều lần.
+2. Các bài toán liên quan tới các giá trị khác nhau của mảng.
+
+Tính chất:
++ Không chứa phần tử trùng lặp: Nếu bạn sử dụng hàm add() để thêm một giá trị đã tồn tại 
+trong Set, hệ thống sẽ tự động bỏ qua và trả về false.
++ Không truy cập dc chỉ số (Index)
+
+- Cú pháp: Vì là một interface, bạn không thể khởi tạo trực tiếp Set bằng từ khóa new Set(). 
+Bạn phải gọi thông qua các lớp triển khai của nó:
+
+    Set<KiểuDữLiệu> tenSet = new TênLớpTriểnKhai<>();
+
+---------------------------------------------
+* HashSet:
+- Tính chất:
+• HashSet chỉ lưu được các phần tử khác nhau.
+• HashSet được cài đặt bằng bảng băm, vì thế tốc độ tìm kiếm 
+phần tử đạt được là O(1).
+• HashSet không có thứ tự, tức là các phần tử trong HashSet 
+có thể xuất hiện nhiều thứ tự ngẫu nhiên.
+• HashSet chỉ lưu được các phần tử kiểu đối tượng.
+• Cho phép chứa duy nhất một phần tử null.
+
+- Khai báo HashSet:
+    Set<dataType> set1 = new HashSet<>();
+    HashSet<dataType> set2 = new HashSet<>();
+
+- Một số hàm thông dụng trong HashSet:
++ add(giá_trị) Thêm phần tử vào set
++ remove(giá_trị) Xóa phần tử khỏi set
++ size() Trả về số lượng phần tử trong set
++ contains(giá_trị) Kiểm tra sự tồn tại của 1 phần tử trong set
++ clear() Xóa mọi phần tử trong set
++ isEmpty() Trả về true nếu set rỗng, ngược lại trả về false
+
+- Tìm số lượng giá trị khác nhau trong mảng số nguyên:
+
+public static void main(String[] args) {
+    Set<Integer> set1 = new HashSet<>();
+    int[] a = {1, 1, 2, 1, 3, 1, 4, 4, 2};
+    for(int x : a){
+        set1.add(x);
+    }
+    System.out.println(set1.size());
+}
+
+- Duyệt set:
+
+public static void main(String[] args) {
+    Set<Integer> set1 = new HashSet<>();
+    int[] a = {1, 1, 2, 1, 3, 1, 4, 4, 2};
+    for(int x : a){
+        set1.add(x);
+    }
+    for(int x : set1){
+        System.out.print(x + " ");
+    }
+}
+
+- Kiểm tra sự tồn tại của 1 giá trị trong set:
+
+public static void main(String[] args) {
+    Set<Integer> set1 = new HashSet<>();
+    int[] a = {1, 1, 2, 1, 3, 1, 4, 4, 2};
+    for(int x : a){
+        set1.add(x);
+    }
+    if(set1.contains(1)){
+        System.out.println("FOUND");
+    }
+    else{
+        System.out.println("NOT FOUND");
+    }
+}
+
+---------------------------------------------
+* LinkedHashSet
+
+- Tính chất:
+• LinkedHashSet chỉ lưu được các phần tử khác nhau.
+• LinkedHashSet được cài đặt bằng bảng băm và danh sách liên 
+kết, vì thế tốc độ tìm kiếm phần tử đạt được là O(1).
+• LinkedHashSet có thứ tự là thứ tự bạn thêm các phần tử vào set.
+• LinkedHashSet chỉ lưu được các phần tử kiểu đối tượng.
+
+- Khai báo LinkedHashSet:
+    Set<dataType> set1 = new LinkedHashSet<>();
+    HashSet<dataType> set2 = new LinkedHashSet<>();
+
+
+- Các hàm và ví dụ của LinkedHashSet tương tự như HashSet, trừ việc
+duyệt các phần tử trong LinkedHashSet có thứ tự
+
+public static void main(String[] args) {
+    HashSet<Integer> set = new LinkedHashSet<>();
+    int[] a = {1, 4, 4, 4, 2, 1, 3, 3};
+    for(int x : a){
+        set.add(x);
+    }
+    for(int x : set){
+        System.out.print(x + " ");
+    }
+}
+
+---------------------------------------------
+* TreeSet
+
+- Tính chất:
+• TreeSet chỉ lưu được các phần tử khác nhau.
+• TreeSet được cài đặt bằng cây đỏ đen - (Red-black tree), các hàm 
+tìm kiếm, xóa của TreeSet là LogN.
+• TreeSet có thứ tự là thứ tự tăng dần.
+• TreeSet chỉ lưu được các phần tử kiểu đối tượng
+
+- Khai báo TreeSet:
+    TreeSet<dataType> set2 = new TreeSet<>();
+
+- TreeSet có thự tự:
+public static void main(String[] args) {
+    TreeSet<Integer> set = new TreeSet<>();
+    int[] a = {1, 4, 4, 4, 2, 1, 3, 3};
+    for(int x : a){
+        set.add(x);
+    }
+    for(int x : set){
+        System.out.print(x + " ");
+    }
+}
+
+- Một số hàm thông dụng trong TreeSet:
+
++ floor(x) Trả về phần tử lớn nhất <= x hoặc trả về null nếu không tồn tại
++ ceiling(x) Trả về phần tử nhỏ nhất >=x hoặc trả về null nếu không tồn tại
++ first() Trả về phần tử đầu tiên trong set
++ last() Trả về phần tử cuối cùng trong set
++ lower(x) Trả về phần tử lớn nhất nhỏ hơn x hoặc trả về null nếu không tồn tại
++ higher(x) Trả về phần tử nhỏ nhất lớn hơn x hoặc trả về null nếu không tồn tại
+
+------------------------------------------------------------------------------------------
+* Map, HashMap, LinkedHashMap, TreeMap
+
+- Map là container giúp lưu các phần tử theo cặp key, value (khóa - giá trị).
+Mỗi giá trị của key sẽ ánh xạ sang một value tương ứng. So với Set thì Map
+thậm chí còn mạnh mẽ và giải quyết được nhiều vấn đề hơn.
+
+- Tính chất:
+• Các key trong map là những giá trị riêng biệt, không có 2 key nào 
+có giá trị giống nhau, value thì có thể trùng nhau.
+• Map có thể tìm kiếm nhanh.
+• Map có thể dùng key làm index để truy cập vào value tương ứng.
+• Map trong java chỉ lưu các phần tử là object
+
+- Áp dụng map:
++ Các bài toán liên quan tới tần suất của các phần tử.
++ Các bài toán cần tìm kiếm, thêm, xóa phần tử một 
+cách nhanh chóng.
++ Dùng map thay cho các bài toán sử dụng mảng
+đánh dấu khi dữ liệu không đẹp
+
+Cú pháp:
+Map<KiểuKhóa, KiểuGiáTrị> tenMap = new TênLớpTriểnKhai<>();
+
+---------------------------------------------
+* HashMap: được cài đặt bằng hash table, Hashmap không có thứ tự nào cả,
+các bạn cần chú ý điều đó.
+
+- Tốc độ thêm (put), xóa (remove), và tìm kiếm (get) cực nhanh với độ phức tạp 
+thời gian O(1).
+
+Khai báo HashMap:
+    Map<keyDataType, valueDataType> map = new HashMap<>();
+    HashMap<keyDataType, valueDataType> map = new HashMap<>();
+
+- Các hàm phổ biến của Hashmap:
++ put(key, val) Thêm cặp key, value vào map
++ size() Trả về kích thước của map
++ isEmpty() Kiểm tra map rỗng
++ clear() Xóa toàn bộ các phần tử trong map
++ containsKey(x) Kiểm tra sự tồn tại của phần tử x trong tập key
++ containsValue(x) Kiểm tra sự tồn tại của phần tử x trong tập value
++ get(x) Trả về value tương ứng với key x
++ remove(x) Xóa cặp phần tử có key là x khỏi map
++ replace(x, y) Thay thế cặp phần tử (x, y)
+
+- Duyệt Map:
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    HashMap<Integer, Integer> map = new HashMap<>();
+    map.put(1, 2);
+    map.put(1, 4);
+    map.put(3, 4);
+    map.put(2, 5);
+    map.put(2, 3);
+    Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
+    for(Map.Entry<Integer, Integer> entry : entrySet){
+        System.out.println(entry.getKey() + " " + entry.getValue());
+    }
+}
+
+- Đếm giá trị khác nhau trong map:
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    HashMap<Integer, Integer> map = new HashMap<>();
+    int[] a = {1, 1, 2, 1, 2, 3, 1, 2};
+    for(int x : a){
+        map.put(x, 1);
+    }
+    System.out.println(map.size());
+}
+
+- Kiểm tra sự tồn tại của nhiều phần tử trong tập hợp:
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    HashMap<Integer, Integer> map = new HashMap<>();
+    int[] a = {1, 1, 2, 1, 2, 3, 1, 2};
+    for(int x : a)
+        map.put(x, 1);
+    int q = sc.nextInt();
+    while(q-- > 0){
+        int x = sc.nextInt();
+        if(map.containsKey(x))
+        System.out.println("FOUND");
+        else
+        System.out.println("NOT FOUND");
+    }
+}
+
+- Đếm tần suất của các giá trị trong mảng:
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    HashMap<Integer, Integer> map = new HashMap<>();
+    int[] a = {1, 1, 2, 1, 2, 3, 1, 2};
+    for (int x : a) {
+        if (map.containsKey(x)) {
+            int tanSuat = map.get(x);
+            map.put(x, tanSuat + 1);
+        } 
+        else {
+            map.put(x, 1);
+        }
+    }
+    Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
+    for (Map.Entry<Integer, Integer> entry : entrySet) {
+        System.out.println(entry.getKey() + " " + entry.getValue());
+    }
+}
+
+---------------------------------------------
+* LinkedHashMap: được cài đặt bằng bảng băm kết hợp với danh sách liên kết,
+tương tự như map có điều khác biệt là trong LinkedHashMap có thứ tự, key
+sẽ được sắp xếp theo thứ tự bạn thêm nó vào trong map
+
+- Tốc độ O(1) tương tự HashMap, nhưng chậm hơn một chút và tốn tài nguyên hơn do 
+phải duy trì các luồng liên kết.
+- Các hàm của LinkedHashMap không có gì khác so với HashMap
+
+- Duyệt LinkedHashMap:
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+    int[] a = {4, 1, 1, 2, 1, 2, 3, 1, 2};
+    for (int x : a) {
+        if (map.containsKey(x)) {
+            int tanSuat = map.get(x);
+            map.put(x, tanSuat + 1);
+        } 
+        else {
+            map.put(x, 1);
+        }
+    }
+    Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
+    for (Map.Entry<Integer, Integer> entry : entrySet) {
+        System.out.println(entry.getKey() + " " + entry.getValue());
+    }
+}
+
+---------------------------------------------
+* TreeMap được cài đặt bằng cây đỏ đen, key trong TreeMap được sắp xếp
+theo thứ tự tăng dần
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    TreeMap<Integer, Integer> map = new TreeMap<>();
+    int[] a = {4, 1, 1, 2, 1, 2, 3, 1, 2};
+    for (int x : a) {
+        if (map.containsKey(x)) {
+            int tanSuat = map.get(x);
+            map.put(x, tanSuat + 1);
+        } else {
+            map.put(x, 1);
+        }
+    }
+    Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
+    for (Map.Entry<Integer, Integer> entry : entrySet)
+        System.out.println(entry.getKey() + " " + entry.getValue());
+}
+
+- TreeMap có có thêm các hàm sau:
++ firstKey() Trả về key đầu tiên trong map
++ lastKey() Trả về key cuối cùng trong map
++ firstEntry() Trả về cặp phần tử đầu tiên trong map
++ lastEntry() Trả về cặp phần tử cuối cùng trong map
++ floorKey(x) Trả về key lớn nhất nhỏ hơn hoặc bằng x
++ floorEntry(x) Trả về cặp phần tử có key lớn nhất nhỏ hơn hoặc bằng x
++ ceilingKey(x) Trả về key nhỏ nhất lớn hơn hoặc bằng x
++ ceilingEntry(x) Trả về cặp phần tử có key nhỏ nhất lơn hơn hoặc bằng x
