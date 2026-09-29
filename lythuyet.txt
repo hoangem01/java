@@ -206,6 +206,39 @@ public class Main {
 + int: Không thể dùng trong ArrayList<int>, không có hàm nào.
 + Integer: Bắt buộc dùng cho ArrayList<Integer>, Có nhiều hàm hỗ trợ.
 
+- Phân biệt Arrays.sort() và Collections.sort()
++ Arrays.sort():
+    int[] a = new int[];
+    Arrays.sort(a)
+• Kiểu dữ liệu nhận vào	Mảng tĩnh (T[], int[], double[]...)	
+• kiểu nguyên thủy (primitive)	Có (int[], char[], float[]...)	
+
++ Collections.sort():
+    List<String> list = new ArrayList<>();
+    Collections.sort(list);
+• Các danh sách kế thừa List<T> (ArrayList, LinkedList...)
+• chỉ làm việc với Object như Integer, String...
+
+---------------------------------------------
+* Mảng 2 chiều:
+
+// Tạo một mảng 2 chiều:
+int[][] a = new int[n][m];
+
+// Vòng lặp ngoài duyệt qua các hàng
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+        System.out.print(a[i][j] + " ");
+    }
+    System.out.println(); 
+}
+// Duyệt bằng for-each (Enhanced for loop)
+for (int[] row : numbers) {
+    for (int value : row) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+}
 -------------------------------------------------------------------------------------------
 * ArrayList: hoạt động như một mảng động có kích thước tự động tăng hoặc giảm khi bạn thêm 
 hoặc xóa phần tử. Cho phép chứa giá trị null
@@ -557,11 +590,23 @@ public static void main(String[] args) {
     map.put(3, 4);
     map.put(2, 5);
     map.put(2, 3);
-    Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
+    Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();         //tạo ra 1 set mà phần tử là các entry
     for(Map.Entry<Integer, Integer> entry : entrySet){
         System.out.println(entry.getKey() + " " + entry.getValue());
     }
 }
+
++ Map.Entry<K, V> giống pair<> trong c++. Nó đại diện cho một cặp key-value
+
++ entrySet(): Trả về kiểu Set<Map.Entry<K, V>>
+
+Các phương thức chính của Map.Entry:
+
+• getKey(): Trả về đối tượng khóa (key) của entry.
+• getValue(): Trả về đối tượng giá trị (value) của entry.
+• setValue(V value): Thay thế giá trị hiện tại của entry bằng một giá trị mới 
+(phương thức này có thể ném ra ngoại lệ UnsupportedOperationException nếu Map đó 
+không cho phép chỉnh sửa).
 
 - Đếm giá trị khác nhau trong map:
 
@@ -673,3 +718,668 @@ public static void main(String[] args) {
 + floorEntry(x) Trả về cặp phần tử có key lớn nhất nhỏ hơn hoặc bằng x
 + ceilingKey(x) Trả về key nhỏ nhất lớn hơn hoặc bằng x
 + ceilingEntry(x) Trả về cặp phần tử có key nhỏ nhất lơn hơn hoặc bằng x
+
+------------------------------------------------------------------------------------------
+* String:
+
+- Các hàm thông dụng:
+
++ hàm replace(): dùng để tìm kiếm và thay thế tất cả các lần xuất hiện của một ký tự hoặc 
+chuỗi con bằng một ký tự hoặc chuỗi mới.
+
+• Trong Java, String là kiểu dữ liệu bất biến (immutable). Nghĩa là hàm replace() không 
+thay đổi chuỗi gốc, mà nó tạo ra và trả về một chuỗi hoàn toàn mới. Nếu bạn không gán lại 
+kết quả vào biến, chuỗi ban đầu sẽ không có gì thay đổi.
+
+String text = "Java 8, Java 11, Java 17";
+String updated = text.replace("Java", "JDK");
+// Kết quả: "JDK 8, JDK 11, JDK 17"
+
+String s = "hello";
+s = s.replace('l', 'p');
+System.out.println(s);      // In ra "heppo"
+
++ Hàm equals(): dùng để so sánh tính tương đương về mặt nội dung giữa hai đối tượng, 
+thay vì so sánh địa chỉ ô nhớ.
+
+String s1 = new String("Java");
+String s2 = new String("Java");
+
+System.out.println(s1 == s2);      // false 
+System.out.println(s1.equals(s2));  // true 
+
++ Hàm length(): Trả về số kí tự trong xâu
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "28tech java";
+        System.out.println(s.length());
+    }
+} 
+
++ Hàm charAt(): String tương tự như mảng, chỉ số bắt đầu từ 0, hàm charAt(index) 
+trả về kí tự ở chỉ số index
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "28tech java";
+        for(int i = 0; i < s.length(); i++){
+            System.out.print(s.charAt(i) + " ");
+        }
+    }
+}
+
++ Hàm toUpperCase(): Trả về xâu ở dạng in hoa, hàm này không thay đổi xâu ban đầu
+public class Main {
+    public static void main(String[] args) {
+        String s = "28tech java";
+        String t = s.toUpperCase();
+        System.out.println(s);
+        System.out.println(t);
+    }
+}
+
+Hàm toLowerCase(): Trả về xâu ở dạng in thường, hàm này không thay đổi xâu ban đầu
+public class Main {
+    public static void main(String[] args) {
+        String s = "28TECH JAVA";
+        String t = s.toLowerCase();
+        System.out.println(s);
+        System.out.println(t);
+    }
+}
+
++ Hàm concat(): nối xâu kí tự khác vào cuối xâu hiện tại, bạn có thể sử dụng 
+toán tử + để làm chức năng tương tự.
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "java ";
+        String t = "28tech.com.vn";
+        String st = s.concat(t);
+        String ts = t + s;
+        System.out.println(st);
+        System.out.println(ts);
+    }
+}
+
++ Hàm compareTo() so sánh 2 xâu theo thứ tự từ điển, nếu 2 xâu bằng nhau trả về 0, 
+trả về số âm nếu xâu hiện tại nhỏ hơn xâu cần so sánh, ngược lại trả về số dương.
+
++ Hàm compareToIgnoreCase() sẽ bỏ qua in hoa in thường khi so sánh.
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "java 28tech";
+        String t = "java 28TECH";
+        System.out.println(s.compareTo(t));
+        System.out.println(s.compareToIgnoreCase(t));
+    }
+}
+
++ Hàm substring(): trả về xâu con 
+public class Main {
+    public static void main(String[] args) {
+        String s = "java 28tech";
+        System.out.println(s.substring(5));
+        System.out.println(s.subSequence(5, 7));
+    }
+}
+
++ Hàm contains(): Kiểm tra sự tồn tại của xâu con
+public class Main {
+    public static void main(String[] args) {
+        String s = "java 28tech";
+        System.out.println(s.contains("28tech"));
+    }
+}
+
+- Tách các từ trong xâu:
+Cách 1: Sử dụng hàm split và regex
+Để tách các từ trong xâu theo dấu cách ta sử dụng hàm 
+split, hàm này trả về 1 mảng chứa các từ trong xâu
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "java 28tech C++ 28tech.com.vn";
+        String[] arr = s.split("\\s+");
+        for(String x : arr){
+            System.out.println(x);
+        }
+    }
+}
+
+Cách 2: Sử dụng lớp StringTokenizer
+public class Main {
+    public static void main(String[] args) {
+        String s = "java 28tech C++ 28tech.com.vn";
+        StringTokenizer st = new StringTokenizer(s);
+        while(st.hasMoreTokens()){
+            System.out.println(st.nextToken());
+        }
+    }
+}
+
+- Để kiểm tra loại kí tự hay chuyển đổi in hoa in thường các bạn sử dụng 
+lớp Character.
+
++ isDigit(char c) Kiểm tra chữ số
++ isLowerCase (char c) Kiểm tra chữ in thường
++ isUpperCase(char c) Kiểm tra in hoa
++ isAlphabetic(char c) Kiểm tra chữ cái
++ char toLower(char c) Chuyển thành chữ in thường
++ char toUpper(char c) Chuyển thành chữ in ho
+
++ Hàm chuyển xâu thành in thường:
+public class Main {
+    public static void main(String[] args) {
+        String s = "java 28tech C++ 28tech.com.vn";
+        int digit = 0, lower = 0, upper = 0, special = 0;
+        for(char x : s.toCharArray()){
+            if(Character.isDigit(x))
+                ++digit;
+            else if(Character.isLowerCase(x))
+                ++lower;
+            else if(Character.isUpperCase(x))
+                ++upper;
+            else ++special;
+            }
+        System.out.println(digit + " " + lower + " " + upper + " " + special);
+    }
+}
+
+- Chuyển xâu thành số và ngược lại:
+Trong Java để chuyển số thành xâu kí tự bạn chỉ cần cộng với 1 xâu
+rỗng, còn chuyển từ xâu thành số có thể sử dụng các hàm parse của lớp
+Integer, Long...
+
+public class Main {
+    public static void main(String[] args) {
+        int n = 2804;
+        String s = "" + n;
+        System.out.println(s);
+        System.out.println(Integer.parseInt(s));
+    }
+}
+
+- Bài toán số lớn:
+Khi gặp bài toán mà số lượng chữ số của số đầu bài cho lên tới hàng
+nghìn chữ số thì các bạn không thể dùng int hay long để lưu. Trong
+trường hợp này các bạn lưu như một xâu kí tự
+
++ Tính tổng chữ số của 1 số có hàng trăm nghìn chữ số:
+public class Main {
+    public static void main(String[] args) {
+        String s = "18238128381283812381123123123123123823812381283";
+        int sum = 0;
+        for(char x : s.toCharArray()){
+            sum += x - '0';
+        }
+        System.out.println(sum);
+    }
+}
+
+- Lớp BigInteger: Trong Java bạn có thể xử lý số nguyên lớn bằng lớp BigInteger
+
+public class Main {
+    public static void main(String[] args) {
+        String s1 = "18238128381283812381123123123123";
+        String s2 = "192399239192393";
+        BigInteger num1 = new BigInteger(s1);
+        BigInteger num2 = new BigInteger(s2);
+        System.out.println(num1.add(num2));
+        System.out.println(num1.subtract(num2));
+        System.out.println(num1.multiply(num2));
+        System.out.println(num1.divide(num2));
+    }
+} 
+
+- Các bài toán liên quan tới tần suất xuất hiện của kí tự trong xâu:
++ Bài toán: Đếm số lần xuất hiện của các kí tự trong xâu sau đó liệt kê theo 
+thứ tự từ điển tăng dần
++ Để đếm tần suất xuất hiện của các kí tự xuất hiện trong xâu các bạn có
+thể sử dụng mảng để đếm, vì các kí tự thường gặp đều có mã ASCII từ 0
+tới 255 nên sử dụng mảng đếm có 256 phần tử là có thể đếm được kí tự
+xuất hiện trong xâu.
+
++ Sử dụng mảng:
+public class Main {
+    public static void main(String[] args) {
+        String s = "28tech28te";
+        int[] cnt = new int[256];
+        for(char x : s.toCharArray()){
+            cnt[x]++;
+        }
+        for(int i = 0; i < 256; i++){
+            if(cnt[i] != 0){
+                System.out.println((char)i + " " + cnt[i]);
+            }
+        }
+    }
+} 
+
++ Sử dụng map:
+public class Main {
+    public static void main(String[] args) {
+        String s = "28tech28te";
+        TreeMap<Character, Integer> map = new TreeMap<>();
+        for(char x : s.toCharArray()){
+        if(map.containsKey(x)){
+        map.put(x, map.get(x) + 1);
+        }
+        else map.put(x, 1);
+        }
+        Set<Map.Entry<Character, Integer>> entrySet = map.entrySet();
+        for(Map.Entry<Character, Integer> entry : entrySet){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+}
+
+---------------------------------------------
+* Lớp StringBuilder:
+String trong Java không thể thay đổi một khi nó đã được khai báo, để sử
+dụng các hàm như chèn, xóa, thêm kí tự ta có thể sử dụng lớp StringBuilder.
+
++ Chuẩn hóa tên:
+public class Main {
+    public static void main(String[] args) {
+        String s = "NgUYEN ThUY liNh";
+        StringBuilder sb = new StringBuilder("");
+        String[] arr = s.split("\\s+");
+        for(String x : arr){
+            sb.append(Character.toUpperCase(x.charAt(0)));
+            for(int j = 1; j < x.length(); j++){
+                sb.append(Character.toLowerCase(x.charAt(j)));
+            }
+            sb.append(" ");
+        }
+        sb.deleteCharAt(sb.length() - 1);       // xóa dấu cách thừa
+        System.out.println(sb.toString());
+    }
+}
+
++ append(...): Nối thêm dữ liệu (chuỗi, số, boolean...) vào cuối.
+sb.append(" Java");
+
++ insert(offset, ...): Chèn dữ liệu vào vị trí index chỉ định.
+sb.insert(0, "Start: ");
+
++ delete(start, end): Xóa các ký tự từ vị trí start đến end - 1.
+sb.delete(2, 5);
+
++ reverse(): Đảo ngược toàn bộ chuỗi ký tự.
+sb.reverse();
+
++ toString(): Chuyển đổi đối tượng StringBuilder thành String bất biến.
+String result = sb.toString();
+
+------------------------------------------------------------------------------------------
+* Class và Object
+
+- Hai khái niệm quan trọng trong lập trình hướng đối tượng là: Lớp (Class)
+và Đối tượng (Object).
+- Mục tiêu của OOP đó là cố gắng đưa các thực thể, đối tượng trong thực tế
+vào phần mềm.
+- Phần mềm cần quản lý những đối tượng như Người, Xe, Sách thì khi
+đó, chúng được xây dựng trong phần mềm dưới dạng các lớp.
+- Lớp chính là bản mô phỏng của một đối tượng trong thực tế.
+
+- Lớp có nhiệm vụ phác họa, mô phỏng những thông tin chung còn khái niệm về đối tượng
+của lớp lại là một thực thể cụ thể của lớp đó.
+
+- Ví dụ: Bạn cần xây dựng một lớp là Person để mô phỏng con người thì khi đó một đối tượng
+của lớp Person là “Nguyễn Văn Tèo” chính là một thực thể, một đối tượng của lớp Person.
+
+
+1. Thuộc tính và phương thức:
+- Để mô tả thông tin của một lớp, bạn cần bổ sung các thuộc tính
+(Attribute) và các phương thức (Method).
+
+2. Xây dựng lớp:
++ Trong class sẽ chứa các member có thể là thuộc tính hoặc phương thức. 
+Khi khai bao các member này thì bạn phải chỉ ra access_specifier cho các thành phần này
++ Các access_specifier (tạm dịch là quyền truy cập): public, protected, private
+
+CÚ PHÁP
+class class_name{
+    access_specifier1:
+    member1, member2...
+    access_specifier2:
+    member1, member2...
+};
+
+- Đối với các member là thuộc tính bạn để quyền truy cập là private để đảm bảo
+tính chất đóng gói của OOP (Encapsulation). Khi quyền truy cập là private thì
+các thuộc tính này chỉ có thể truy cập bên trong phạm vi của lớp.
+- Đối với các member là phương thức bạn để quyền truy cập là public. Quyền truy cập
+protected sẽ được giải thích rõ hơn ở phần kế thừa.
+
+public class SinhVien {
+    private String maSinhVien;
+        private String hoTen;
+        private double gpa;
+        public void greet(){
+        System.out.println("Hello !");
+    }
+}
+
+3. Khai báo đối tượng:
+- Để khai báo một đối tượng của lớp các bạn sử dụng tên lớp như kiểu dữ liệu. 
+Ngoài ra bạn cũng có thể khai báo mảng đối tượng, ArrayList đối tượng.
+
+public static void main(String[] args) 
+{
+    SinhVien s = new SinhVien();
+    s.greet();
+}
+
+- Để truy cập các phương thức và thuộc tính của đối tượng ta sử dụng toán tử ‘.’
+- Bạn không thể truy cập vào các member private của lớp bên ngoài phạm vi của lớp
+
+5. Hàm tạo (Constructor):
+• Là hàm được gọi mặc định khi bạn khai báo một đối tượng của 1 lớp nào đó,
+kể cả khi bạn không xây dựng hàm này thì hàm này vẫn tồn tại.
+
+• Tuy nhiên bạn có thể tự xây dựng hàm tạo để nhanh chóng khởi tạo thông tin 
+cho các thuộc tính của đối tượng bằng cách nạp chồng hàm tạo.
+
+• Hàm tạo không có kiểu trả về, có tên trùng với tên lớp, tùy theo tham số bạn 
+truyền vào cho đối tượng khi khai báo thì hàm tạo phù hợp sẽ được gọi
+
+public class SinhVien {
+    private String maSinhVien;
+        private String hoTen;
+        private double gpa;
+        SinhVien(){
+            System.out.println("Ham tao khong tham so");
+        }
+        SinhVien(String ma, String ten, double diem){
+            maSinhVien = ma;
+            hoTen = ten;
+            gpa = diem;
+        }
+        public void display(){
+            System.out.println(maSinhVien + " " + hoTen + " " + gpa);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        SinhVien s = new SinhVien();
+        SinhVien t = new SinhVien("123", "Teo", 3.5);
+        s.display();
+        t.display();
+    }
+}
+
+5. Con trỏ this, getter() và setter():
+
+- Bạn có thể sử dụng con trỏ this trước tên các thuộc tính hoặc phương thức 
+để đảm bảo sự rõ ràng khi có những tham số trùng tên với các thuộc tính.
+
+- Getter(): Khi làm việc với các đối tượng, đôi khi bạn muốn lấy ra các 
+thuộc tính của lớp nhưng không thể truy cập trực tiếp vào các thuộc tính này. 
+Giải pháp: xây dựng phương thức getter() để lấy về thuộc tính mong muốn.
+
+- Setter(): Tương tự như getter(), khi bạn muốn thay đổi thuộc tính của 
+đối tượng bạn phải sử dụng hàm setter để thay đổi vì không thể trực tiếp 
+truy cập vào các thuộc tính này
+
+- Con trỏ this:
+public class SinhVien {
+    private String maSinhVien;
+    private String hoTen;
+    private double gpa;
+    SinhVien(){
+        System.out.println("Ham tao khong tham so");
+    }
+    SinhVien(String maSinhVien, String hoTen, double gpa){
+        this.maSinhVien = maSinhVien;
+        this.hoTen = hoTen;
+        this.gpa = gpa;
+    }
+    public void display(){
+        System.out.println(this.maSinhVien + " " + this.hoTen + " " + this.gpa);
+    }
+}
+
+- Getter():
+public class SinhVien {
+    private String maSinhVien;
+    private String hoTen;
+    private double gpa;
+    SinhVien(String maSinhVien, String hoTen, double gpa){
+        this.maSinhVien = maSinhVien;
+        this.hoTen = hoTen;
+        this.gpa = gpa;
+    }
+    public String getMaSinhVien() {
+        return maSinhVien;
+    }
+    public String getHoTen() {
+        return hoTen;
+    }
+    public double getGpa() {
+        return gpa;
+    }
+}
+
+- Setter():
+public class SinhVien {
+    private String maSinhVien;
+    private String hoTen;
+    private double gpa;
+    SinhVien(String maSinhVien, String hoTen, double gpa){
+        this.maSinhVien = maSinhVien;
+        this.hoTen = hoTen;
+        this.gpa = gpa;
+    }
+    public void setMaSinhVien(String maSinhVien) {
+        this.maSinhVien = maSinhVien;
+    }
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+    public void setGpa(double gpa) {
+        this.gpa = gpa;
+    }
+}
+
+6. Static keyword:
+
+- Biến static: Biến static thuộc về class chứ không thuộc về bất cứ một đối
+tượng nào của lớp, tức là các đối tượng của lớp sẽ chung biến static này.
+
+public class SinhVien {
+    private String maSinhVien;
+    private String hoTen;
+    private double gpa;
+    private static int count = 0;
+    SinhVien(String maSinhVien, String hoTen, double gpa){
+        ++count;
+        this.maSinhVien = maSinhVien;
+        this.hoTen = hoTen;
+        this.gpa = gpa;
+    }
+    public int getCount(){
+        return count;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        SinhVien s = new SinhVien("123", "Teo", 3.2);
+        SinhVien t = new SinhVien("124", "Ti", 3.5);
+        System.out.println(s.getCount());
+        System.out.println(t.getCount());
+    }
+}
+
+- Ngoài biến static ta còn hàm static, hàm static sẽ thuộc về class, bạn có thể gọi
+hàm static mà không cần thông qua đối tượng cụ thể của lớp. Hàm static có thể
+gọi thông qua tên lớp. Tuy nhiên bạn không thể sử dụng các thuộc tính, phương
+thức không phải static bên trong hàm static
+
+public class Main {
+    public static void main(String[] args) {
+        SinhVien s = new SinhVien("123", "Teo", 3.2);
+        SinhVien t = new SinhVien("124", "Ti", 3.5);
+        System.out.println(s.getCount());
+        System.out.println(t.getCount());
+        System.out.println(SinhVien.getCount());
+    }
+} 
+
+------------------------------------------------------------------------------------------
+* KẾ THỪA INHERITANCE
+
+• Giả sử phần mềm của bạn cần quản lý thông tin của những đối tượng Sinh Viên, Giáo
+Viên, Nhân Viên của một trường đại học.
+• Các đối tượng này có những thuộc tính chung ví dụ như tên, tuổi, ngày sinh, địa chỉ.
+
+? Vậy để có thể tránh được việc dư thừa code và tái sử dụng phần mềm thì hướng giải quyết là gì ?
+
+- GIẢI PHÁP:
++ Xây dựng một lớp cơ sở (base class) chứa các thuộc tính chung của 3 lớp này, sau đó cho các lớp
+này kế thừa từ lớp cơ sở.
+
++ Khi đó ta cần bổ sung các thuộc tính, phương thức của từng lớp dẫn xuất (derived class)
+
+- Lớp trong Java có thể mở rộng, tạo một lớp mới từ một lớp cũ mà vẫn bảo toàn được những 
+đặc điểm của lớp cũ. Quá trình này gọi là kế thừa, kế thừa liên quan tới các khái niệm như lớp cha 
+(base class hoặc super class), lớp con (derived class hoặc sub class).
+
+1. Kế thừa:
+CÚ PHÁP:
+public class SubClass extends SuperClass{}
+
+- Khi lớp con kế thừa lớp cha, nó có đầy đủ các thuộc tính và phương thức của lớp cha, 
+ngoài ra bạn có thể bổ sung thêm thuộc tính và phương thức cần thiết cho lớp con
+
+- Tuy nhiên nếu các thuộc tính của lớp cha là private bạn cũng ko thể truy cập vào các 
+thuộc tính này từ lớp con. Nếu muốn thì bạn khai báo phạm vi truy cập là protected
+
+public class Person {
+    private String name, birth;
+    public Person(String name, String birth){
+        this.name = name;
+        this.birth = birth;
+    }
+    public String getName(){
+        return this.name
+    }
+}
+public class Student extends Person{
+    private String lop;
+    private double gpa;
+    public Student(String lop, double gpa, String name, String birth){
+        super(name, birth);
+        this.lop = lop;
+        this.gpa = gpa;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student("CNTT1", 3.2, "Nguyen Van A", "22/12/2002");
+        System.out.println(s.getName());
+    }
+}
+
+2. Từ khóa super:
+- Khi muốn gọi các phương thức của lớp cha tại lớp con ta có thể sử dụng
+từ khóa super
+- Gọi phương thức của lớp cha (đã bị ghi đè): Khi lớp con ghi đè (override) 
+một phương thức của lớp cha, có thể dùng super.tenPhuongThuc() để gọi lại 
+logic của phương thức nguyên bản ở lớp cha, thay vì viết lại toàn bộ.
+
+- Gọi Constructor của lớp cha: Được sử dụng để khởi tạo các thuộc tính mà lớp 
+con được kế thừa.
+Lưu ý quan trọng: Lời gọi super() hoặc super(tham_số) bắt buộc phải là câu lệnh 
+đầu tiên nằm bên trong constructor của lớp con. Nếu bạn không gọi rõ ràng, 
+trình biên dịch Java sẽ tự động chèn ngầm định một lệnh super() (không có tham số).
+
+- Truy cập thuộc tính của lớp cha: Dùng trong trường hợp lớp con khai báo 
+một thuộc tính có tên trùng với thuộc tính của lớp cha (hiện tượng che khuất 
+- shadowing). Lệnh super.tenThuocTinh giúp chương trình phân biệt rõ bạn 
+đang muốn tương tác với biến của lớp cha.
+
+
+- Gọi PTKT của lớp cha từ lớp con
+public Student(String lop, double gpa, String name, String birth) 
+{
+    super(name, birth);
+    this.lop = lop;
+    this.gpa = gpa;
+} 
+
+- Gọi PT toString của lớp cha từ lớp con
+public class Person {
+    private String name, birth;
+    public Person(String name, String birth) {
+        this.name = name;
+        this.birth = birth;
+    }
+    @Override
+    public String toString(){
+        return this.name + " " + this.birth;
+    }
+}
+
+public class Student extends Person{
+    private String lop;
+    private double gpa;
+    public Student(String lop, double gpa, String name, String birth) {
+        super(name, birth);
+        this.lop = lop;
+        this.gpa = gpa;
+    }
+    public String toString(){
+        return super.toString() + " " + this.lop + " " + String.format("%.2f", this.gpa);
+    }
+}
+
+3. Overriding:
+- Ghi đè trong kế thừa là khi ở lớp cha và lớp con có một phương thức giống nhau. 
+Nếu lớp con không ghi đè phương thức này thì phương thức của lớp cha sẽ được gọi 
+khi bạn gọi phương thức này từ đối tượng của lớp con
+
+public class Person {
+    public void greet(){
+        System.out.println("Person !");
+    }
+}
+public class Student extends Person{
+    public void greet(){
+        System.out.println("Student !");
+    }
+}
+
+4. Các loại kế thừa:
+- Kế thừa đơn (Single Inheritance)
+- Kế thừa nhiều mức (Multi-level Inheritance)
+- Kế thừa thứ bậc (Hierarchical Inheritance)
+
+public class Person {
+    public String name, birth;
+    public Person(String name, String birth) {
+        this.name = name;
+        this.birth = birth;
+    }
+}
+public class Student extends Person{
+    private String lop;
+    private double gpa;
+    public Student(String lop, double gpa, String name, String birth) {
+        super(name, birth);
+        this.lop = lop;
+        this.gpa = gpa;
+    }
+}
+
+public class Pupil extends Student{
+    private String fatherName;
+    public Pupil(String fatherName, String lop, double gpa, String name, String birth) {
+        super(lop, gpa, name, birth);
+        this.fatherName = fatherName;
+    }
+}
