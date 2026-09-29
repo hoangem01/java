@@ -863,12 +863,14 @@ public class Main {
 - Để kiểm tra loại kí tự hay chuyển đổi in hoa in thường các bạn sử dụng 
 lớp Character.
 
-+ isDigit(char c) Kiểm tra chữ số
-+ isLowerCase (char c) Kiểm tra chữ in thường
-+ isUpperCase(char c) Kiểm tra in hoa
-+ isAlphabetic(char c) Kiểm tra chữ cái
++ bool isDigit(char c) Kiểm tra chữ số
++ bool isLowerCase (char c) Kiểm tra chữ in thường
++ bool isUpperCase(char c) Kiểm tra in hoa
++ bool isAlphabetic(char c) Kiểm tra chữ cái
 + char toLower(char c) Chuyển thành chữ in thường
-+ char toUpper(char c) Chuyển thành chữ in ho
+• Có thể dùng với String, ko cần truyền tham số 
++ char toUpper(char c) Chuyển thành chữ in hoa
+• Có thể dùng với String, ko cần truyền tham số 
 
 + Hàm chuyển xâu thành in thường:
 public class Main {
@@ -1195,7 +1197,7 @@ public class SinhVien {
     private String maSinhVien;
     private String hoTen;
     private double gpa;
-    private static int count = 0;
+    private static int count = 0;                           //
     SinhVien(String maSinhVien, String hoTen, double gpa){
         ++count;
         this.maSinhVien = maSinhVien;
@@ -1288,6 +1290,7 @@ public class Main {
 2. Từ khóa super:
 - Khi muốn gọi các phương thức của lớp cha tại lớp con ta có thể sử dụng
 từ khóa super
+
 - Gọi phương thức của lớp cha (đã bị ghi đè): Khi lớp con ghi đè (override) 
 một phương thức của lớp cha, có thể dùng super.tenPhuongThuc() để gọi lại 
 logic của phương thức nguyên bản ở lớp cha, thay vì viết lại toàn bộ.
@@ -1383,3 +1386,190 @@ public class Pupil extends Student{
         this.fatherName = fatherName;
     }
 }
+
+5. Protected: là một trong 4 mức độ truy cập (Access Modifier). Nó được thiết kế chuyên 
+biệt để phục vụ tính kế thừa (Inheritance) trong lập trình hướng đối tượng.
+
+- Quy tắc truy cập của protected gói gọn trong 2 trường hợp:
++ Cùng gói (Same package): Bất kỳ class nào nằm trong cùng package đều truy cập được.
++ Khác gói (Different package): Chỉ những class con kế thừa (subclass) từ class đó mới 
+được phép truy cập.
+
+-------------------------------------------------------------------------------------------
+* ĐA HÌNH VÀ TRỪU TƯỢNG
+
+1. Đa hình:
+Đa hình - Polymorphism là một trong 3 tính chất quan trọng của lập trình hướng đối tượng 
+(bên cạnh Đóng gói -Encapsulation và Kế thừa - Inheritance). Đa hình cho phép bạn tham chiếu 
+một biến thuộc kiểu dữ liệu của lớp cơ sở tới đối tượng của một lớp con.
+
+- Cho phép gom nhóm các đối tượng khác nhau vào cùng một mảng/danh sách:
+    List<Person> people = new ArrayList<>();
+    people.add(new Student());
+    people.add(new Teacher());
+    people.add(new Doctor());
+
+Ví dụ: Lớp Student kế thừa từ lớp Person thì tất cả các thực thể (instance) của lớp Student 
+đều là thực thể của lớp Person, nhưng ngược lại thì không
+
+Ví dụ: Kế thừa lớp Person và nạp chồng phương thức display():
+
+public class Person {
+    public void display(){
+        System.out.println("Person !");
+    }
+}
+public class Student extends Person{
+    @Override
+    public void display(){
+        System.out.println("Student !");
+    }
+}
+public class Staff extends Person {
+    @Override
+    public void display(){
+        System.out.println("Staff !");
+    }
+}
+
+public class Lecturer extends Person {
+    @Override
+    public void display(){
+        System.out.println("Lecturer !");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Student();
+        Person p2 = new Staff();
+        Person p3 = new Lecturer();
+        p1.display();
+        p2.display();
+        p3.display();
+    }
+}
+
+2. Dynamic Binding:
+- Trong kế thừa nhiều mức (Multilevel Inheritance) một phương thức có thể được ghi đè ở
+nhiều lớp trong chuỗi kế thừa, máy ảo Java (JVM) sẽ quyết định phương thức nào được
+gọi lúc Runtime.
+
+public class Person {
+    public void display(){
+        System.out.println("Person !");
+    }
+}
+public class Student extends Person{
+    public void display(){
+        System.out.println("Student !");
+    }
+}
+public class Pupil extends Student{
+    public void display(){
+        System.out.println("Pupil !");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Person();
+        Person p2 = new Student();
+        Person p3 = new Pupil();
+        p1.display();
+        p2.display();
+        p3.display();
+    }
+}
+
+3. Ép kiểu đối tượng và toán tử instanceof:
+- Một biến tham chiếu của đối tượng có thể được ép sang tham chiếu của
+một đối tượng thuộc lớp khác, đây được gọi là ép kiểu đối tượng
+
+- Implicit casting và Explicit casting:
+public class Main {
+    public static void main(String[] args) {
+        Object ob = new Student();                  //Implicit casting
+        Student s = (Student)ob;                    // Explicit casting
+    }
+}
+
+- Ta có thể ép một instance của lớp con sang một biến đối tượng của lớp cha (upcasting),
+vì một đối tượng của lớp con bao giờ cũng là một đối tượng của lớp cha.
++ Instance ("đối tượng cụ thể") chính là một đối tượng thực tế được tạo ra từ một Class 
+(lớp)
+
+- Khi ép kiểu một instance của lớp cha sang biến đối tượng của lớp con (downcasting) bạn
+phải tự đảm bảo rằng instance của lớp cha là một instance của lớp con, nếu không sẽ phát
+sinh lỗi ClassCastException. Downcasting được thực hiện bằng Explicit casting
+
+Ví dụ lỗi ClassCastException:
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Student();                  // upcasting
+        Student s1 = (Student)p1;                   // Downcasting
+        Person p2 = new Student();
+        Staff s2 = (Staff)p2;                       // ClassCastException               
+    }
+}
+
+- Sử dụng toán tử instanceof để tránh phát sinh lỗi:
++ Toán tử instanceof trong Java được sử dụng để kiểm tra xem một đối tượng (object) 
+cụ thể có thực sự là một thể hiện (instance) của một Class, Subclass (lớp con) hay 
+Interface nào đó hay không. Kết quả trả về của toán tử này luôn là một giá trị 
+boolean (true hoặc false).
+
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Student();                  // upcasting
+            if(p1 instanceof Student){
+            System.out.println("OK1");
+            Student s1 = (Student)p1;               // Downcasting
+        }
+        else{
+            System.out.println("Error");
+        }
+        Person p2 = new Student();
+        if(p2 instanceof Staff){
+            System.out.println("OK2");
+            Staff s2 = (Staff)p2;                  // ClassCastException
+        }
+        else{
+            System.out.println("Error");
+        }
+    }
+}
+
+4. Lớp trừu tượng - Abstract Class:
+- Abstract class không thể sử dụng để tạo ra một đối tượng như các lớp thông thường, 
+lớp trừu tượng có thể chứa các phương thức trừu tượng (abstract method) và sẽ được 
+cài đặt chi tiết hơn ở các lớp con.
+
+- Khi một lớp con kế thừa từ 1 lớp trừu tượng, tất cả các phương thức trừu tượng ở 
+lớp cha phải được cài đặt cụ thể ở lớp con.
+
+Ví dụ:
+Lớp GeometricObject là lớp trừu tượng, có 2 lớp kế thừa từ nó là Circle và Rectangle, 
+trong trường hợp này 2 phương thức getArea() và getPerimeter() không thể cài đặt ở lớp cha
+vì nó còn phụ thuộc vào loại hình (tam giác, vuông, tròn…) vì thế 2 phương thức này 
+được khai báo là trừu tượng.
+
+- Trong thiết kế lớp với UML lớp trừu tượng và phương thức trừu tượng được in nghiêng.
+
+- Lớp GeometricObject:
+
+import java.util.Date;
+public abstract class GeometricObject {
+    private String color;
+    private boolean filled;
+    private java.util.Date dateCreated;
+    protected GeometricObject(){}
+    protected GeometricObject(String color, boolean filled){
+        this.color = color;
+        this.filled = filled;
+        this.dateCreated = new Date(System.currentTimeMillis());
+    }
+    public abstract double getArea();
+    public abstract double getPerimeter();
+}
+
+- Lớp Circle:
+
