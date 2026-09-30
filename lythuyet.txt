@@ -1538,31 +1538,53 @@ public class Main {
     }
 }
 
-4. Lớp trừu tượng - Abstract Class:
-- Abstract class không thể sử dụng để tạo ra một đối tượng như các lớp thông thường, 
+4. LỚP TRỪU TƯỢNG - ABSTRACT CLASS
+
+Khái niệm và đặc điểm:
+
+* Abstract class không thể sử dụng để tạo ra một đối tượng như các lớp thông thường, 
 lớp trừu tượng có thể chứa các phương thức trừu tượng (abstract method) và sẽ được 
 cài đặt chi tiết hơn ở các lớp con.
 
-- Khi một lớp con kế thừa từ 1 lớp trừu tượng, tất cả các phương thức trừu tượng ở 
+* Khi một lớp con kế thừa từ 1 lớp trừu tượng, tất cả các phương thức trừu tượng ở 
 lớp cha phải được cài đặt cụ thể ở lớp con.
 
-Ví dụ:
-Lớp GeometricObject là lớp trừu tượng, có 2 lớp kế thừa từ nó là Circle và Rectangle, 
-trong trường hợp này 2 phương thức getArea() và getPerimeter() không thể cài đặt ở lớp cha
-vì nó còn phụ thuộc vào loại hình (tam giác, vuông, tròn…) vì thế 2 phương thức này 
+* Ví dụ: Lớp GeometricObject là lớp trừu tượng, có 2 lớp kế thừa từ nó là Circle và Rectangle. 
+Trong trường hợp này 2 phương thức getArea() và getPerimeter() không thể cài đặt ở lớp cha 
+vì nó còn phụ thuộc vào loại hình (tam giác, vuông, tròn...) vì thế 2 phương thức này 
 được khai báo là trừu tượng.
 
-- Trong thiết kế lớp với UML lớp trừu tượng và phương thức trừu tượng được in nghiêng.
+* Trong thiết kế lớp với UML, lớp trừu tượng và phương thức trừu tượng được in nghiêng.
+
+Lưu ý về lớp trừu tượng:
+
+* Không thể tạo đối tượng từ lớp trừu tượng thông qua toán tử new, tuy nhiên bạn vẫn có thể 
+tạo constructor cho lớp trừu tượng.
+
+* Một lớp trừu tượng có thể không chứa phương thức trừu tượng.
+
+* Lớp cha của một lớp trừu tượng có thể không phải là một lớp trừu tượng
+
+* Một phương thức trừu tượng chỉ có thể được chứa trong một lớp trừu tượng 
+
+* Nếu một lớp con không cài đặt mọi phương thức trừu tượng ở lớp cha(lớp trừu tượng) thì nó phải được khai báo 
+là một lớp trừu tượng.
+
+* Các phương thức trừu tượng không thể khai báo với từ khóa static.
+
+* Bạn không thể tạo đối tượng từ lớp trừu tượng nhưng có thể sử dụng nó như một kiểu dữ liệu.
+Ví dụ: GeometricObject ob1 = new Circle("Red", true, 10);
+
+Code minh họa:
 
 - Lớp GeometricObject:
 
-import java.util.Date;
 public abstract class GeometricObject {
     private String color;
     private boolean filled;
     private java.util.Date dateCreated;
-    protected GeometricObject(){}
-    protected GeometricObject(String color, boolean filled){
+    protected GeometricObject() {}
+    protected GeometricObject(String color, boolean filled) {
         this.color = color;
         this.filled = filled;
         this.dateCreated = new Date(System.currentTimeMillis());
@@ -1573,3 +1595,332 @@ public abstract class GeometricObject {
 
 - Lớp Circle:
 
+public class Circle extends GeometricObject {
+    private double radius;
+
+    public Circle(String color, boolean filled, double radius) {
+        super(color, filled);
+        this.radius = radius;
+    }
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+    @Override
+    public double getPerimeter() {
+        return 2 * Math.PI * radius;
+    }
+
+}
+
+- Lớp Rectangle:
+
+public class Rectangle extends GeometricObject {
+    private double width, height;
+
+    public Rectangle(double width, double height, String color, boolean filled) {
+        super(color, filled);
+        this.width = width;
+        this.height = height;
+    }
+    @Override
+    public double getArea() {
+        return this.width * this.height;
+    }
+    @Override
+    public double getPerimeter() {
+        return 2 * (this.width + this.height);
+    }
+}
+
+- Lớp Main và kết quả:
+
+public class Main {
+    public static boolean equalArea(GeometricObject o1, GeometricObject o2) {
+        return o1.getArea() == o2.getArea();
+    }
+
+    public static void display(GeometricObject o) {
+        System.out.println(o.getArea() + " " + o.getPerimeter());
+    }
+
+    public static void main(String[] args) {
+        GeometricObject ob1 = new Circle("Red", true, 10);
+        GeometricObject ob2 = new Rectangle(10, 20, "Green", true);
+
+        System.out.println(equalArea(ob1, ob2));
+        display(ob1);
+        display(ob2);
+    }
+}
+
+OUTPUT:
+false
+314.1592653589793 62.83185307179586
+200.0 60.0
+
+5. INTERFACE
+
+Khái niệm và đặc điểm:
+
+* Interface trong Java có cấu trúc tương tự như một lớp nhưng chỉ chứa các hằng số và 
+phương thức trừu tượng.
+
+* Mối quan hệ giữa lớp và interface được gọi là kế thừa interface, để một lớp kế thừa 
+interface ta sử dụng từ khóa implements.
+
+* Interface có vai trò tạo ra những phương thức, hành vi chung cho các lớp tương tự như 
+Lớp trừu tượng.
+
+* Bạn không thể tạo ra một đối tượng từ interface thông qua toán tử new.
+
+* Trong UML: Khi một lớp cài đặt một interface thì mối quan hệ này được biểu diễn bởi mũi 
+tên nét đứt có tam giác rỗng trỏ từ lớp tới interface; tên interface và phương thức được 
+in nghiêng.
+
+Cú pháp khai báo:
+
+modifier interface InterfaceName {
+    // constant
+    // abstract method
+}
+
+public class X implements InterfaceName {
+    // Cài đặt các phương thức của InterfaceName
+}
+
+Code minh họa:
+
+Ví dụ khai báo cơ bản:
+
+public interface Edible {
+    public abstract String howToEat();
+    }
+
+public class Dog implements Edible {
+    @Override
+    public String howToEat() {
+        System.out.println("Dog eat");
+        return "Dog eat";
+    }
+}
+
+Ví dụ thực thi chi tiết:
+
+public interface Drawable {
+    public abstract void draw();
+}
+
+public class Circle implements Drawable {
+    @Override
+    public void draw() {
+        System.out.println("Drawing circle");
+    }
+}
+
+public class Rectangle implements Drawable {
+    @Override
+    public void draw() {
+        System.out.println("Drawing rectangle");
+    }
+}
+
+public class Main {
+    public static void main(String\[\] args) {
+        Circle c = new Circle();
+        c.draw();
+        Rectangle r = new Rectangle();
+        r.draw();
+    }
+
+}
+
+OUTPUT:
+Drawing circle
+Drawing rectangle
+
+6. ĐA KẾ THỪA TRONG JAVA
+
+* Trong Java không hỗ trợ đa kế thừa thông qua lớp nhưng có thể thông qua interface, 
+một lớp có thể cài đặt được nhiều interface cùng lúc.
+
+Code minh họa:
+
+public interface Flyable {
+    public abstract void fly();
+}
+
+public interface Runable {
+    public abstract void run();
+}
+
+public class Bird implements Runable, Flyable {
+    @Override
+    public void run() {
+        System.out.println("Bird can run");
+    }
+
+    @Override
+    public void fly() {
+        System.out.println("Bird can fly");
+    }
+}
+
+7. COMPARABLE INTERFACE
+
+Khái niệm và đặc điểm:
+
+* Comparable Interface định nghĩa một phương thức là compareTo để so sánh object.
+
+* Giả sử bạn cần một phương thức chung để tìm đối tượng lớn hơn trong 2 Sinh viên, 
+2 hình tròn... để có thể so sánh 2 đối tượng thì chúng cần phải so sánh được với nhau, 
+Java hỗ trợ interface Comparable giúp bạn đạt được điều này.
+
+- Định nghĩa trong thư viện Java:
+
+public interface Comparable<E> {
+    public int compareTo(E o);
+}
+
+Code minh họa:
+
+- Lớp Student cài đặt Comparable interface:
+
+public class Student implements Comparable {
+    private String name;
+    private double gpa;
+    public Student(String name, double gpa) {
+        this.name = name;
+        this.gpa = gpa;
+    }
+
+    public double getGpa() {
+        return this.gpa;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        if (this.gpa < o.getGpa()) return -1;
+        else if (this.gpa > o.getGpa()) return 1;
+        else return 0;
+    }
+}
+
+- Drive Class 1 (Sắp xếp tăng dần theo GPA):
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList a = new ArrayList<>();
+        a.add(new Student("Teo", 3.1));
+        a.add(new Student("Nam", 3.4));
+        a.add(new Student("Ty", 2.7));
+        a.add(new Student("Phuong", 2.1));
+        Collections.sort(a);
+
+        for (Student x : a) {
+            System.out.println(x.getName() + " " + x.getGpa());
+        }
+    }
+}
+
+OUTPUT 1:
+Phuong 2.1
+Ty 2.7
+Teo 3.1
+Nam 3.4
+
+- Drive Class 2 (Sắp xếp giảm dần với reverseOrder):
+
+public class Main {
+    public static void main(String\[\] args) {
+        ArrayList a = new ArrayList<>();
+        a.add(new Student("Teo", 3.1));
+        a.add(new Student("Nam", 3.4));
+        a.add(new Student("Ty", 2.7));
+        a.add(new Student("Phuong", 2.1));
+        Collections.sort(a, Collections.reverseOrder());
+
+        for (Student x : a) {
+            System.out.println(x.getName() + " " + x.getGpa());
+        }
+    }
+}
+
+OUTPUT 2:
+Nam 3.4
+Teo 3.1
+Ty 2.7
+Phuong 2.1
+
+8. COMPARATOR INTERFACE
+
+Khái niệm và đặc điểm:
+
+* Bên cạnh Comparable interface, Java còn cung cấp cho bạn interface là Comparator 
+để có thể dễ dàng sắp xếp danh sách các object mà người dùng tự định nghĩa ra theo 
+nhiều tiêu chí khác nhau.
+
+- Định nghĩa trong thư viện Java:
+
+@FunctionalInterface
+public interface Comparator<T> {
+    int compare(T o1, T o2);
+    boolean equals(Object obj);
+}
+
+Code minh họa:
+
+- Lớp Student:
+
+public class Student {
+    private String name;
+    private double gpa;
+    public Student(String name, double gpa) {
+        this.name = name;
+        this.gpa = gpa;
+    }
+
+    public double getGpa() {
+        return this.gpa;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+}
+
+- Lớp SortStudentByName implement Comparator interface:
+
+public class SortStudentByName implements Comparator {
+    @Override
+    public int compare(Student o1, Student o2) {
+        return o1.getName().compareTo(o2.getName());
+    }
+}
+
+- Hàm Main chạy thử:
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList a = new ArrayList<>();
+        a.add(new Student("Teo", 3.1));
+        a.add(new Student("Nam", 3.4));
+        a.add(new Student("Ty", 2.7));
+        a.add(new Student("Phuong", 2.1));
+        Collections.sort(a, new SortStudentByName());
+
+        for (Student x : a) {
+            System.out.println(x.getName() + " " + x.getGpa());
+        }
+    }
+}
+
+OUTPUT:
+Nam 3.4
+Phuong 2.1
+Teo 3.1
+Ty 2.7
