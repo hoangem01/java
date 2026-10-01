@@ -1924,3 +1924,233 @@ Nam 3.4
 Phuong 2.1
 Teo 3.1
 Ty 2.7
+
+-------------------------------------------------------------------------------------------
+1. Java Exception:
+-Khi thực thi mã lệnh Java sẽ xuất hiện những lỗi không lường trước được, lỗi
+này có thể đến từ người dùng hoặc lập trình viên như : Dữ liệu không hợp lệ,
+chia cho 0, truy cập vào chỉ số không hợp lệ trong mảng, đối tượng chưa
+được cấp phát bộ nhớ…
+- Khi những lỗi này xảy ra trong quá trình thực thi, chương trình của bạn sẽ ném ra một ngoại
+lệ thông báo về lỗi gặp phải khiến chương trình bị kết thúc ngay lập tức.
+
+1. Java Exception:
+- Để bắt và xử lý ngoại lệ, tránh việc chương trình bị kết thúc khi xảy ra lỗi ta sử dụng try 
+và catch. Try sẽ giúp ta định nghĩa các câu lệnh có khả năng sinh ra lỗi và catch giúp xử
+lý khi xảy ra lỗi.
+
+2. Try - catch:
+Cú pháp:
+    try{
+        //Code
+    }
+    catch(Exception e){
+        //Code
+    }
+
+Ví dụ bắt ngoại lệ chia cho 0:
+public static void main(String[] args) {
+    try {
+        int a = 10, b = 0;
+        System.out.println(a / b);
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    System.out.println("Continue !");
+}
+OUTPUT 
+java.lang.ArithmeticException: / by zero
+Continue !
+
+-> Mặc dù xảy ra lỗi nhưng chương trình vẫn
+sẽ tiếp tục thực thi các câu lệnh bên dưới.
+
+- Bắt ngoại lệ nhập dữ liệu không hợp lệ:
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    try {
+        int n = sc.nextInt();
+    }
+    catch (InputMismatchException e) {
+        System.out.println("Invalid input !");
+    }
+}
+
+- Bắt ngoại lệ truy cập chỉ số không hợp lệ:
+
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+    try {
+        int[] a = {1, 2, 3};
+        System.out.println(a[4]);
+    } catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("Invalid index !");
+    }
+}
+
+- Bắt ngoại lệ chưa khởi tạo đối tượng:
+
+public static void main(String[] args) {
+    try {
+        ArrayList<Integer>[] arr = new ArrayList[10];
+        arr[0].add(100);
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
+
+- Bạn có thể bắt cùng lúc nhiều ngoại lệ:
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    try {
+        int[] a = {1, 2, 3};
+        System.out.println(a[1]);
+        int x = 10, y = 0;
+        System.out.println(x / y);
+    }
+    catch (ArrayIndexOutOfBoundsException | ArithmeticException e) {
+    System.out.println(e.getMessage());
+}
+
+3. Finally:
+Câulệnh bêntrong finally luôn được thực thi cho dù có xảy ra ngoại lệ hay không.
+
+Ví dụ 1:
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+    try {
+        int[] a = {1, 2, 3};
+        System.out.println(a[4]);
+    }
+    catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("Invalid index !");
+    } 
+    finally{
+        System.out.println("Finally block is always executed !");
+    }
+}
+
+3. Finally:
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    try {
+        int[] a = {1, 2, 3};
+        System.out.println(a[1]);
+    } catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("Invalid index !");
+    } finally {
+        System.out.println("Finally block is always executed !");
+    }
+}
+OUTPUT 
+2
+Finally block is always executed 
+
+-------------------------------------------------------------------------------------------
+* Đọc ghi Files
+
+Xử lý file trong Java được thực hiện thông qua các luồng (Streams). Có hai loại luồng chính:
+
+- Luồng Ký tự (Character Stream): Đọc/ghi dữ liệu dạng văn bản (text file như .txt, .csv). 
+Hỗ trợ Unicode (16-bit). Các lớp đại diện: FileReader, FileWriter, BufferedReader, BufferedWriter.
+
+- Luồng Byte (Byte Stream): Đọc/ghi dữ liệu dạng nhị phân (hình ảnh, video, file thực thi). 
+Các lớp đại diện: FileInputStream, FileOutputStream.
+
+Tính chất bắt buộc
+- Xử lý ngoại lệ (Exception Handling): Mọi thao tác I/O đều có nguy cơ thất bại, do đó Java 
+bắt buộc phải bắt IOException (hoặc FileNotFoundException).
+
+- Đóng luồng (Resource Management): Luôn phải gọi hàm .close() sau khi thao tác xong để giải phóng 
+bộ nhớ và mở khóa file. 
+
+1. Lớp Scanner và các hàm Kiểm tra/Đọc dữ liệu
+
+- Cơ chế hoạt động của ScannerScanner hoạt động dựa trên các dấu phân cách (delimiters). 
+Mặc định, nó sử dụng khoảng trắng (dấu cách, tab, xuống dòng) để cắt luồng dữ liệu thành 
+các khối nhỏ gọi là các token.
+
+- Các hàm của Scanner được chia làm 2 nhóm, luôn đi theo cặp:
++ Nhóm hàm hasNext...(): Hàm kiểm tra (trả về boolean). Nhìn xem token tiếp theo có tồn tại và 
+có đúng kiểu dữ liệu yêu cầu hay không. Luôn dùng hàm này trước để tránh lỗi NoSuchElementException.
++ Nhóm hàm next...(): Hàm thực thi. Lấy token tiếp theo, chuyển đổi thành kiểu dữ liệu tương ứng 
+và đẩy con trỏ tiến lên
+
+Các hàm phổ biến:
++ hasNext() / next(): Đọc chuỗi (String) cho đến khi gặp khoảng trắng.
++ hasNextLine() / nextLine(): Đọc toàn bộ chuỗi trên 1 dòng cho đến khi gặp ký tự xuống dòng \n.
++ hasNextInt() / nextInt(): Đọc và ép kiểu thành số nguyên (int).
++ hasNextDouble() / nextDouble(): Đọc và ép kiểu thành số thực (double).
++ hasNextBoolean() / nextBoolean(): Đọc giá trị logic (true hoặc false).
+
+- Cách dùng Scanner để đọc File
+Sử dụng vòng lặp while(scanner.hasNext()) là kỹ thuật chuẩn để duyệt qua toàn bộ dữ liệu 
+trong file mà không biết trước file có bao nhiêu dòng/từ.
+
+import java.io*;
+
+public class test {
+    public static void main(String[] args) {
+        try (Scanner sc = new Scanner(new File("numbers.txt"))) {
+
+            // Đọc liên tục chừng nào file còn chứa số nguyên
+            while (sc.hasNextInt()) {
+                int number = sc.nextInt();
+                System.out.println("Đọc được số: " + number);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Không tìm thấy file!");
+        }
+    }
+}
+
+2. FileWriter là một lớp được sử dụng để ghi dữ liệu dạng ký tự (character-oriented) vào một file. 
+
+- Mục đích: Phù hợp nhất để ghi các file văn bản thông thường (.txt, .csv, .json,...). 
+Không dùng FileWriter để ghi dữ liệu nhị phân (hình ảnh, âm thanh, file .exe) – đối với dữ liệu nhị phân, 
+phải dùng FileOutputStream.
+
+* Các cách khởi tạo (Constructors)
+
+- Chế độ Ghi đè (Overwrite - Mặc định):
++ Nếu file đã tồn tại, toàn bộ nội dung cũ sẽ bị xóa sạch trước khi ghi nội dung mới. 
++ Nếu file chưa tồn tại, nó sẽ tự động tạo file mới.
+    FileWriter fw = new FileWriter("data.txt");
+
+- Chế độ Ghi nối (Append): Thêm tham số true vào constructor. 
++ Nếu file đã có nội dung rồi, nội dung mới sẽ được nối tiếp vào cuối file.
+    FileWriter fw = new FileWriter("data.txt", true); 
+
+- Các hàm (Methods) quan trọng:
++ write(String str): Ghi một chuỗi văn bản vào file.
++ write(int c): Ghi một ký tự (thông qua mã ASCII/Unicode của nó).
++ write(char[] cbuf): Ghi một mảng ký tự vào file.
++ write(String str, int off, int len): Ghi một phần của chuỗi (bắt đầu từ vị trí off,
+độ dài len).
++ flush(): Đẩy (ép) toàn bộ dữ liệu còn đọng trong bộ đệm (buffer) xuống file ngay lập tức.
++ close(): Bắt buộc! Đóng luồng, giải phóng tài nguyên bộ nhớ và mở khóa file. 
+Hàm này sẽ tự động gọi flush() trước khi đóng.
+
+- Cú pháp và Ví dụ thực tế
+Vì thao tác với file có thể xảy ra lỗi (VD: ổ cứng đầy, không có quyền ghi), Java bắt buộc bạn 
+phải xử lý ngoại lệ IOException.
+
+import java.io.*;
+public class FileWriterExample {
+    public static void main(String[] args) {
+        String data = "Xin chào, đây là nội dung được ghi từ Java!";
+        
+        try (FileWriter fw = new FileWriter("output.txt")) {
+            
+            fw.write(data);
+            fw.write("\n"); // Ghi ký tự xuống dòng
+            fw.write("Đây là dòng thứ 2.");
+            
+            System.out.println("Ghi file thành công!");
+            
+        } catch (IOException e) {
+            System.out.println("Đã xảy ra lỗi khi ghi file: " + e.getMessage());
+        }
+    }
+}
