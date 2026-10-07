@@ -1,0 +1,51 @@
+
+[Tham lam] Cho hai số nguyên dương N và S. Hãy lựa chọn các chữ số phù hợp để tạo 
+ra số nhỏ nhất và số lớn nhất có N chữ số sao cho tổng chữ số đúng bằng S.
+
+public class baitap {
+    public static void solve(int n, int s){
+        String ma = "";
+        int s1 = s;
+
+        while(s1 >= 9){
+            ma += '9';
+            s1 -= 9;
+        }
+        if(ma.length() < n) ma += Integer.toString(s1);
+        while(ma.length() < n) ma += '0';
+
+        s1 = s;
+        String mi = "";
+        String tmp = "";
+        while(s1 > 9){
+            tmp += '9';
+            s1 -= 9;
+        }
+        mi += tmp;
+        if(mi.length() < n-1)  {
+            mi = Integer.toString(s1-1) + mi;
+            while(mi.length() < n-1) mi = '0'+ mi;
+        }
+        else {
+            mi = Integer.toString(s1) + mi;
+        }
+        if (mi.length() == n-1) mi = '1'+ mi;
+
+        System.out.println(mi + " " + ma);
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int s = sc.nextInt();
+        if(s > n*9 ||( s == 0 && n >1))
+            {System.out.println("-1 -1");
+                return;
+            }
+        if(n == 1 && s == 0)    
+            {System.out.println("0 0");
+                return;
+            }
+        solve(n,s);
+    
+    }
+}
